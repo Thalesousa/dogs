@@ -18,7 +18,7 @@ export const UserStorage = ({ children }) => {
       setLoading(false);
       setLogin(false);
       localStorage.removeItem('token');
-      navigate('/login');
+      navigate('/login', { replace: true });
     },
     [navigate]
   );
@@ -37,11 +37,11 @@ export const UserStorage = ({ children }) => {
       setLoading(true);
       const { url, options } = TOKEN_POST({ username, password });
       const tokenRes = await fetch(url, options);
-      if (!tokenRes.ok) throw new Error(`Error: ${tokenRes.statusText}`);
+      if (!tokenRes.ok) throw new Error(`Erro: usuário invalido`);
       const { token } = await tokenRes.json();
       window.localStorage.setItem('token', token);
       await getUser(token);
-      navigate('/conta');
+      navigate('/');
     } catch (err) {
       setError(err.message);
       setLogin(false);

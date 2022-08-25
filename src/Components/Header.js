@@ -13,7 +13,7 @@ export function Header() {
           <Dogs />
         </Link>
         {data ? (
-          <Link className={styles.login} to="/conta">
+          <Link className={styles.login} to="/">
             {data.nome}
             <button onClick={userLogout}>Sair</button>
           </Link>
