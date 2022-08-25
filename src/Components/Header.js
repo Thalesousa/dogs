@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import styles from "./Header.module.css";
-import { Link } from "react-router-dom";
-import { ReactComponent as Dogs } from "../Assets/dogs.svg";
-import { UserContext } from "../Context/UserContext";
+import React, { useContext } from 'react';
+import styles from './Header.module.css';
+import { Link } from 'react-router-dom';
+import { ReactComponent as Dogs } from '../Assets/dogs.svg';
+import { UserContext } from '../Context/UserContext';
 
 export function Header() {
-  const { data } = useContext(UserContext);
+  const { data, userLogout } = useContext(UserContext);
   return (
     <header className={styles.header}>
       <nav className={`${styles.nav} container`}>
@@ -15,6 +15,7 @@ export function Header() {
         {data ? (
           <Link className={styles.login} to="/conta">
             {data.nome}
+            <button onClick={userLogout}>Sair</button>
           </Link>
         ) : (
           <Link className={styles.login} to="/login">
