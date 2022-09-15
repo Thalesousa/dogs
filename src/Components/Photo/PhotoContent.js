@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './PhotoContent.module.css';
-import PhotoComments from './PhotoComments';
+import { PhotoComments } from './PhotoComments';
 
 export function PhotoContent({ data }) {
   const { photo, comments } = data;
