@@ -3,9 +3,9 @@ import { ReactComponent as Enviar } from '../../Assets/enviar.svg';
 import { useFetch } from '../../Hooks/useFetch';
 import { Error } from '../Helper/Error';
 import { COMMENT_POST } from '../../api';
-import styles from './PhotoCommentsForm.module.css'
+import styles from './PhotoCommentsForm.module.css';
 
-export function PhotoCommentsForm({ id, setComments }) {
+export function PhotoCommentsForm({ id, setComments, single }) {
   const [comment, setComment] = useState('');
   const { request, error } = useFetch();
 
@@ -20,7 +20,10 @@ export function PhotoCommentsForm({ id, setComments }) {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${single ? styles.single : ''}`}
+      onSubmit={handleSubmit}
+    >
       <textarea
         className={styles.textarea}
         id="comment"

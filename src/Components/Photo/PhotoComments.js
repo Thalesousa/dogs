@@ -6,16 +6,19 @@ import { useEffect } from 'react';
 
 export function PhotoComments(props) {
   const [comments, setComments] = useState(() => props.comments);
-  const commentsSection = useRef(null)
+  const commentsSection = useRef(null);
   const { login } = useContext(UserContext);
 
   useEffect(() => {
     commentsSection.current.scrollTop = commentsSection.current.scrollHeight;
-  }, [comments])
+  }, [comments]);
 
   return (
     <>
-      <ul ref={commentsSection} className={styles.comments}>
+      <ul
+        ref={commentsSection}
+        className={`${styles.comments} ${props.single ? styles.single : ''}`}
+      >
         {comments.map((comment) => (
           <li key={comment.comment_ID}>
             <b>{comment.comment_author}: </b>
@@ -23,7 +26,13 @@ export function PhotoComments(props) {
           </li>
         ))}
       </ul>
-      {login && <PhotoCommentsForm id={props.id} setComments={setComments} />}
+      {login && (
+        <PhotoCommentsForm
+          single={props.single}
+          id={props.id}
+          setComments={setComments}
+        />
+      )}
     </>
   );
 }
