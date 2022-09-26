@@ -5,24 +5,23 @@ import { Input } from '../Forms/Input';
 import { Button } from '../Forms/Button';
 import { useForm } from '../../Hooks/useForm';
 import { useFetch } from '../../Hooks/useFetch';
+import { Error } from '../Helper/Error';
 import { PASSWORD_RESET } from '../../api';
 import { useNavigate } from 'react-router-dom';
 
 export function LoginPasswordReset() {
   const [login, setLogin] = useState('');
   const [key, setKey] = useState('');
-  const navigate = useNavigate();
-
   const password = useForm();
+  const { error, loading, request } = useFetch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const key = params.get('key');
     const login = params.get('login');
-    const { error, loading, request } = useFetch();
-
-    key && setKey(key);
-    login && setLogin(login);
+    if (key) setKey(key);
+    if (login) setLogin(login);
   }, []);
 
   async function handleSubmit(event) {
@@ -33,9 +32,8 @@ export function LoginPasswordReset() {
         key,
         password: password.value,
       });
-
       const { response } = await request(url, options);
-      response.ok && navigate('/login');
+      if (response.ok) navigate('/login');
     }
   }
   return (
@@ -54,6 +52,7 @@ export function LoginPasswordReset() {
           <Button>Resetar</Button>
         )}
       </form>
+      <Error error={error} />
     </>
   );
 }
