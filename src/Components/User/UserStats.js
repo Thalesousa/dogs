@@ -1,5 +1,11 @@
 import React from 'react';
+import { Head } from '../Helper/Head';
 
 export function UserStats() {
-  return <div>Estatistica</div>;
+  return (
+    <>
+      <Head title="Estatistica" />
+      <div>Estatistica</div>
+    </>
+  );
 }

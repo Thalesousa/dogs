@@ -38,6 +38,7 @@ export function LoginPasswordReset() {
   }
   return (
     <>
+      <Head title="Resete a senha" />
       <h1 className="title">Resetar a Senha</h1>
       <form onSubmit={handleSubmit}>
         <Input
