@@ -1,7 +1,59 @@
-import React from 'react'
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Input } from '../Forms/Input';
+import { Button } from '../Forms/Button';
+import { useForm } from '../../Hooks/useForm';
+import { useFetch } from '../../Hooks/useFetch';
+import { PASSWORD_RESET } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginPasswordReset() {
+  const [login, setLogin] = useState('');
+  const [key, setKey] = useState('');
+  const navigate = useNavigate();
+
+  const password = useForm();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('key');
+    const login = params.get('login');
+    const { error, loading, request } = useFetch();
+
+    key && setKey(key);
+    login && setLogin(login);
+  }, []);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    if (password.validate()) {
+      const { url, options } = PASSWORD_RESET({
+        login,
+        key,
+        password: password.value,
+      });
+
+      const { response } = await request(url, options);
+      response.ok && navigate('/login');
+    }
+  }
   return (
-    <div>LoginPasswordReset</div>
-  )
+    <>
+      <h1 className="title">Resetar a Senha</h1>
+      <form onSubmit={handleSubmit}>
+        <Input
+          label="Nova Senha"
+          type="password"
+          name="password"
+          {...password}
+        />
+        {loading ? (
+          <Button disabled>Resetando...</Button>
+        ) : (
+          <Button>Resetar</Button>
+        )}
+      </form>
+    </>
+  );
 }
