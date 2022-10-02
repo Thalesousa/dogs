@@ -15,9 +15,10 @@
 .forms {
   max-width: 30rem;
   padding: 2rem;
+  margin-top: 20vh;
 }
 
-@media (max-width:40rem) {
+@media (max-width: 40rem) {
   .login {
     grid-template-columns: 1fr;
   }
