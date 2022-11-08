@@ -1,9 +1,8 @@
-import { VictoryPie, VictoryChart, VictoryBar } from 'victory';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import styles from './UserStatsGraphs.module.css';
+import { VictoryPie, VictoryChart, VictoryBar } from 'victory';
+import { useEffect, useState } from 'react';
 
-export function UserStatsGraphs({ data }) {
+export default function UserStatsGraphs ({ data }){
   const [graph, setGraph] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -14,11 +13,10 @@ export function UserStatsGraphs({ data }) {
         y: Number(item.acessos),
       };
     });
-    const totalAcessos = data
-      .map(({ acessos }) => Number(acessos))
-      .reduce((a, b) => a + b, 0);
 
-    setTotal(totalAcessos);
+    setTotal(
+      data.map(({ acessos }) => Number(acessos)).reduce((a, b) => a + b, 0),
+    );
     setGraph(graphData);
   }, [data]);
 
@@ -27,9 +25,8 @@ export function UserStatsGraphs({ data }) {
       <div className={`${styles.total} ${styles.graphItem}`}>
         <p>Acessos: {total}</p>
       </div>
-      <div>
+      <div className={styles.graphItem}>
         <VictoryPie
-          className={styles.graphItem}
           data={graph}
           innerRadius={50}
           padding={{ top: 20, bottom: 20, left: 80, right: 80 }}
@@ -53,4 +50,4 @@ export function UserStatsGraphs({ data }) {
       </div>
     </section>
   );
-}
+};

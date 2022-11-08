@@ -24,7 +24,6 @@ export function UserStats() {
       <Suspense fallback={<div></div>}>
         <Head title="Estatistica" />
         <UserStatsGraphs data={data} />
-        <div>Estatistica</div>
       </Suspense>
     );
   } else return null;
